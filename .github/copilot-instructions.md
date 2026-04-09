@@ -149,6 +149,11 @@ When modifying or adding code, follow these patterns:
 - Format code with an 80-char print width style (Prettier-like).
 - Avoid adding heavy frameworks; keep dependencies minimal.
 
+## Git workflow
+- **Never** commit or push on the user's behalf. The user will always review
+  changes and commit/push manually.
+- Do not stage files, create commits, or run `git push`.
+
 ## Extensibility roadmap (common future tasks)
 - Email PDF automatically (SMTP/Mailgun/SES/Gmail API).
 - Write back status fields to the `Invoices` sheet (requires edit scope and
