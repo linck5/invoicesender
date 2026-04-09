@@ -9,11 +9,11 @@ export type InvoiceRow = {
   senderName: string;
   senderDetails: string;
 
-  hourlyRate: number;
-  leaveDays: number;
+  hourlyRate?: number;
+  leaveDays?: number;
 
-  periodStart: string; // YYYY-MM-DD
-  periodEnd: string; // YYYY-MM-DD
+  periodStart?: string; // YYYY-MM-DD
+  periodEnd?: string; // YYYY-MM-DD
 
   notes?: string;
 };

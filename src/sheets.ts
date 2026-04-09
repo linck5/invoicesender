@@ -2,6 +2,18 @@ import { google } from "googleapis";
 import { z } from "zod";
 import type { InvoiceRow, LineItem } from "./types.js";
 
+const emptyToUndefined = (v: unknown) =>
+  v === "" || v == null ? undefined : v;
+
+const optionalNumber = z.preprocess(
+  emptyToUndefined,
+  z.coerce.number().optional()
+);
+const optionalDateStr = z.preprocess(
+  emptyToUndefined,
+  z.string().min(10).optional()
+);
+
 const invoiceSchema = z.object({
   invoice_id: z.string().min(1),
   invoice_number: z.string().min(1),
@@ -13,11 +25,11 @@ const invoiceSchema = z.object({
   sender_name: z.string().min(1),
   sender_details: z.string().min(1),
 
-  hourly_rate: z.coerce.number(),
-  leave_days: z.coerce.number(),
+  hourly_rate: optionalNumber,
+  leave_days: optionalNumber,
 
-  period_start: z.string().min(10),
-  period_end: z.string().min(10),
+  period_start: optionalDateStr,
+  period_end: optionalDateStr,
 
   notes: z.string().optional()
 });

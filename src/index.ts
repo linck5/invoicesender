@@ -29,15 +29,25 @@ async function main(): Promise<void> {
     invoiceId
   });
 
-  const { line: baseLine } = buildBaseServiceLine({
-    periodStart: invoice.periodStart,
-    periodEnd: invoice.periodEnd,
-    leaveDays: invoice.leaveDays,
-    hourlyRate: invoice.hourlyRate,
-    tz: cfg.INVOICE_TIMEZONE
-  });
+  const hasBaseService =
+    invoice.periodStart != null &&
+    invoice.periodEnd != null &&
+    invoice.leaveDays != null &&
+    invoice.hourlyRate != null;
 
-  const items = [baseLine, ...extras].map((li) => {
+  const baseLines = hasBaseService
+    ? [
+        buildBaseServiceLine({
+          periodStart: invoice.periodStart!,
+          periodEnd: invoice.periodEnd!,
+          leaveDays: invoice.leaveDays!,
+          hourlyRate: invoice.hourlyRate!,
+          tz: cfg.INVOICE_TIMEZONE
+        }).line
+      ]
+    : [];
+
+  const items = [...baseLines, ...extras].map((li) => {
     const amount = li.quantity * li.unitPrice;
     return { ...li, amountNzd: amount };
   });
