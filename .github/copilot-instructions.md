@@ -82,9 +82,16 @@ Behavior:
 
 ## Local development
 ### Prereqs
-- Node.js 20+
+- Node.js (managed via `nvm`; version pinned in `.nvmrc`)
 - Access to the Google Sheet (shared with service account)
 - Google Sheets API enabled in GCP for the project
+
+### Node version (nvm)
+**Always run `nvm use` before any command that invokes Node or npm** (install,
+build, dev, generate, etc.). The project has an `.nvmrc` file that pins the
+required version. When executing terminal commands on behalf of the user, prefix
+with `nvm use &&` or run `nvm use` as a separate prior command in the same
+shell. Do **not** add `source` before `nvm use`.
 
 ### Environment variables
 Create a local `.env` (do NOT commit). Required vars:
