@@ -1,0 +1,51 @@
+name: Generate invoice PDF
+
+on:
+  workflow_dispatch:
+    inputs:
+      invoiceId:
+        description: "Invoice id like 2026-03"
+        required: false
+        type: string
+  schedule:
+    - cron: "0 10 1 * *"
+    # Runs 10:00 UTC on the 1st day of each month.
+    # Your script defaults to previous month in Pacific/Auckland.
+
+jobs:
+  build-invoice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Generate PDF
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          INVOICE_TIMEZONE: Pacific/Auckland
+        run: |
+          INVOICE_ID="${{ inputs.invoiceId }}"
+          if [ -n "$INVOICE_ID" ]; then
+            npm run generate -- --invoiceId "$INVOICE_ID"
+          else
+            npm run generate
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: invoice-pdf
+          path: out/*.pdf
