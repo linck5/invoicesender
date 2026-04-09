@@ -9,13 +9,13 @@
   <body>
     <div class="top">
       <div>
-        <h1>Invoice</h1>
-        <div>Invoice #: {{invoiceNumber}}</div>
-        <div>Invoice date: {{invoiceDate}}</div>
-      </div>
-      <div class="right">
         <div class="bold">{{yourName}}</div>
         <div class="pre">{{yourAddress}}</div>
+      </div>
+      <div class="right">
+        <h1>Invoice</h1>
+        <div>#: {{invoiceNumber}}</div>
+        <div>Date: {{invoiceDate}}</div>
       </div>
     </div>
 
@@ -47,7 +47,7 @@
     </table>
 
     <div class="total">
-      <div class="label">Total ({{currency}})</div>
+      <div class="label">Total amount due: ({{currency}})</div>
       <div class="amount">{{totalNzd}}</div>
     </div>
 
