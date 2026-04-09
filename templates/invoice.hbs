@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      {{{css}}}
+    </style>
+  </head>
+  <body>
+    <div class="top">
+      <div>
+        <h1>Invoice</h1>
+        <div>Invoice #: {{invoiceNumber}}</div>
+        <div>Invoice date: {{invoiceDate}}</div>
+      </div>
+      <div class="right">
+        <div class="bold">{{yourName}}</div>
+        <div class="pre">{{yourAddress}}</div>
+      </div>
+    </div>
+
+    <div class="billto">
+      <div class="label">Bill To</div>
+      <div class="bold">{{clientName}}</div>
+      <div class="pre">{{clientAddress}}</div>
+    </div>
+
+    <table class="items">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th class="num">Qty</th>
+          <th class="num">Unit ({{currency}})</th>
+          <th class="num">Amount ({{currency}})</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+          <tr>
+            <td class="pre">{{description}}</td>
+            <td class="num">{{quantity}}</td>
+            <td class="num">{{unitPriceNzd}}</td>
+            <td class="num">{{amountNzd}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class="total">
+      <div class="label">Total ({{currency}})</div>
+      <div class="amount">{{totalNzd}}</div>
+    </div>
+
+    {{#if notes}}
+      <div class="notes">
+        <div class="label">Notes</div>
+        <div class="pre">{{notes}}</div>
+      </div>
+    {{/if}}
+  </body>
+</html>
