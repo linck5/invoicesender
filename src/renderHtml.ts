@@ -11,6 +11,13 @@ export async function renderInvoiceHtml(data: unknown): Promise<string> {
     fs.readFile(cssPath, "utf8")
   ]);
 
+  Handlebars.registerHelper("fmtCurrency", (value: number) =>
+    new Intl.NumberFormat("en-NZ", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(value)
+  );
+
   const tpl = Handlebars.compile(tplSrc);
 
   return tpl({ ...data, css: cssSrc });

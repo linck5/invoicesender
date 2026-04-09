@@ -39,16 +39,16 @@
           <tr>
             <td class="pre">{{description}}</td>
             <td class="num">{{quantity}}</td>
-            <td class="num">{{unitPriceNzd}}</td>
-            <td class="num">{{amountNzd}}</td>
+            <td class="num">{{fmtCurrency unitPriceNzd}}</td>
+            <td class="num">{{fmtCurrency amountNzd}}</td>
           </tr>
         {{/each}}
       </tbody>
     </table>
 
     <div class="total">
-      <div class="label">Total amount due: ({{currency}})</div>
-      <div class="amount">{{totalNzd}}</div>
+      <div class="label">Total amount due:</div>
+      <div class="amount">{{currency}} {{fmtCurrency totalNzd}}</div>
     </div>
 
     {{#if notes}}
