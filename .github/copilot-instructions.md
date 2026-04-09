@@ -153,3 +153,4 @@ When modifying or adding code, follow these patterns:
 - Update `templates/invoice.hbs` + `invoice.css` for layout changes.
 - Keep computation logic deterministic and testable.
 - When adding new sheet columns, update parsing + types with validations.
+- This is a public repo, so avoid any sensitive data in code or comments.
