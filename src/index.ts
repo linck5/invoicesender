@@ -13,7 +13,6 @@ function getArg(name: string): string | undefined {
 }
 
 async function main(): Promise<void> {
-  console.log("ENV length:", process.env.GOOGLE_SERVICE_ACCOUNT_JSON?.length);
   const cfg = loadConfig();
 
   const invoiceId = getArg("invoiceId");
@@ -34,12 +33,12 @@ async function main(): Promise<void> {
     periodStart: invoice.periodStart,
     periodEnd: invoice.periodEnd,
     leaveDays: invoice.leaveDays,
-    hourlyRateNzd: invoice.hourlyRateNzd,
+    hourlyRate: invoice.hourlyRate,
     tz: cfg.INVOICE_TIMEZONE
   });
 
   const items = [baseLine, ...extras].map((li) => {
-    const amount = li.quantity * li.unitPriceNzd;
+    const amount = li.quantity * li.unitPrice;
     return { ...li, amountNzd: amount };
   });
 
@@ -50,11 +49,11 @@ async function main(): Promise<void> {
     invoiceNumber: invoice.invoiceNumber,
     invoiceDate: invoice.invoiceDate,
 
-    yourName: invoice.yourName,
-    yourAddress: invoice.yourAddress,
+    senderName: invoice.senderName,
+    senderDetails: invoice.senderDetails,
 
     clientName: invoice.clientName,
-    clientAddress: invoice.clientAddress,
+    clientDetails: invoice.clientDetails,
 
     currency: "NZD",
     items,

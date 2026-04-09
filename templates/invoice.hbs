@@ -9,8 +9,8 @@
   <body>
     <div class="top">
       <div>
-        <div class="bold">{{yourName}}</div>
-        <div class="pre">{{yourAddress}}</div>
+        <div class="bold">{{senderName}}</div>
+        <div class="pre">{{senderDetails}}</div>
       </div>
       <div class="right">
         <h1>Invoice</h1>
@@ -22,7 +22,7 @@
     <div class="billto">
       <div class="label">Bill To</div>
       <div class="bold">{{clientName}}</div>
-      <div class="pre">{{clientAddress}}</div>
+      <div class="pre">{{clientDetails}}</div>
     </div>
 
     <table class="items">
@@ -39,7 +39,7 @@
           <tr>
             <td class="pre">{{description}}</td>
             <td class="num">{{quantity}}</td>
-            <td class="num">{{fmtCurrency unitPriceNzd}}</td>
+            <td class="num">{{fmtCurrency unitPrice}}</td>
             <td class="num">{{fmtCurrency amountNzd}}</td>
           </tr>
         {{/each}}

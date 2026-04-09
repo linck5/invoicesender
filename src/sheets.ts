@@ -8,12 +8,12 @@ const invoiceSchema = z.object({
   invoice_date: z.string().min(10),
 
   client_name: z.string().min(1),
-  client_address: z.string().min(1),
+  client_details: z.string().min(1),
 
-  your_name: z.string().min(1),
-  your_address: z.string().min(1),
+  sender_name: z.string().min(1),
+  sender_details: z.string().min(1),
 
-  hourly_rate_nzd: z.coerce.number(),
+  hourly_rate: z.coerce.number(),
   leave_days: z.coerce.number(),
 
   period_start: z.string().min(10),
@@ -60,12 +60,12 @@ export async function loadFromSheets(params: {
     invoiceDate: invParsed.invoice_date,
 
     clientName: invParsed.client_name,
-    clientAddress: invParsed.client_address,
+    clientDetails: invParsed.client_details,
 
-    yourName: invParsed.your_name,
-    yourAddress: invParsed.your_address,
+    senderName: invParsed.sender_name,
+    senderDetails: invParsed.sender_details,
 
-    hourlyRateNzd: invParsed.hourly_rate_nzd,
+    hourlyRate: invParsed.hourly_rate,
     leaveDays: invParsed.leave_days,
 
     periodStart: invParsed.period_start,
@@ -80,7 +80,7 @@ export async function loadFromSheets(params: {
       return {
         description: String(r.description ?? "").trim(),
         quantity: Number(r.quantity ?? 0),
-        unitPriceNzd: Number(r.unit_price_nzd ?? 0)
+        unitPrice: Number(r.unit_price ?? 0)
       };
     })
     .filter((li) => li.description && li.quantity);

@@ -23,10 +23,10 @@ export function buildBaseServiceLine(params: {
   periodStart: string;
   periodEnd: string;
   leaveDays: number;
-  hourlyRateNzd: number;
+  hourlyRate: number;
   tz: string;
 }): {
-  line: { description: string; quantity: number; unitPriceNzd: number };
+  line: { description: string; quantity: number; unitPrice: number };
   meta: { businessDays: number; daysWorked: number };
 } {
   const businessDays = countBusinessDaysInclusive(
@@ -45,13 +45,13 @@ export function buildBaseServiceLine(params: {
     `Leave days: ${params.leaveDays}\n` +
     `Days worked: ${daysWorked}\n` +
     `Hours: ${hours}\n` +
-    `Hourly rate: ${params.hourlyRateNzd.toFixed(2)} NZD`;
+    `Hourly rate: ${params.hourlyRate.toFixed(2)} NZD`;
 
   return {
     line: {
       description,
       quantity: hours,
-      unitPriceNzd: params.hourlyRateNzd
+      unitPrice: params.hourlyRate
     },
     meta: { businessDays, daysWorked }
   };
@@ -59,7 +59,7 @@ export function buildBaseServiceLine(params: {
 
 export function sumTotal(items: {
   quantity: number;
-  unitPriceNzd: number;
+  unitPrice: number;
 }[]): number {
-  return items.reduce((acc, it) => acc + it.quantity * it.unitPriceNzd, 0);
+  return items.reduce((acc, it) => acc + it.quantity * it.unitPrice, 0);
 }

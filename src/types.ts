@@ -4,12 +4,12 @@ export type InvoiceRow = {
   invoiceDate: string; // YYYY-MM-DD
 
   clientName: string;
-  clientAddress: string;
+  clientDetails: string;
 
-  yourName: string;
-  yourAddress: string;
+  senderName: string;
+  senderDetails: string;
 
-  hourlyRateNzd: number;
+  hourlyRate: number;
   leaveDays: number;
 
   periodStart: string; // YYYY-MM-DD
@@ -21,5 +21,5 @@ export type InvoiceRow = {
 export type LineItem = {
   description: string;
   quantity: number;
-  unitPriceNzd: number;
+  unitPrice: number;
 };

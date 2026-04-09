@@ -53,10 +53,10 @@ Headers (exact names expected by `src/sheets.ts`):
 - `invoice_number` (string; can match `invoice_id` or be different)
 - `invoice_date` (YYYY-MM-DD; required)
 - `client_name`
-- `client_address` (single cell; newlines allowed)
-- `your_name`
-- `your_address`
-- `hourly_rate_nzd` (number)
+- `client_details` (single cell; newlines allowed)
+- `sender_name`
+- `sender_details`
+- `hourly_rate` (number)
 - `leave_days` (number)
 - `period_start` (YYYY-MM-DD)
 - `period_end` (YYYY-MM-DD)
@@ -67,7 +67,7 @@ Headers:
 - `invoice_id`
 - `description`
 - `quantity` (number; e.g. `1` or `3.5`)
-- `unit_price_nzd` (number)
+- `unit_price` (number)
 
 Behavior:
 - A computed “base services” line item is generated from the `Invoices` row
