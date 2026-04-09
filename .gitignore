@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Generated PDFs
+out/
+
+# Environment variables (contains secrets)
+.env
+
+# macOS
+.DS_Store
