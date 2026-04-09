@@ -1,3 +1,4 @@
+import "dotenv/config";
 import path from "node:path";
 import { loadConfig } from "./config.js";
 import { loadFromSheets } from "./sheets.js";
@@ -12,6 +13,7 @@ function getArg(name: string): string | undefined {
 }
 
 async function main(): Promise<void> {
+  console.log("ENV length:", process.env.GOOGLE_SERVICE_ACCOUNT_JSON?.length);
   const cfg = loadConfig();
 
   const invoiceId = getArg("invoiceId");

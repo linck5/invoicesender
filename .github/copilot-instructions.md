@@ -87,14 +87,30 @@ Behavior:
 - Google Sheets API enabled in GCP for the project
 
 ### Environment variables
-Create a local `.env` (do NOT commit). Example in `.env.example`:
+Create a local `.env` (do NOT commit). Required vars:
 
 - `GOOGLE_SERVICE_ACCOUNT_JSON` = full service account JSON content
 - `SHEET_ID` = spreadsheet ID from the Google Sheets URL
 - `INVOICE_TIMEZONE` = `Pacific/Auckland` (or another IANA tz)
 
+The app loads `.env` automatically via `dotenv` (`import "dotenv/config"` in
+`src/index.ts`). No `--env-file` flag or manual `export` is needed.
+
+⚠️ `.env` formatting for `GOOGLE_SERVICE_ACCOUNT_JSON`:
+- The JSON value **must** be on a **single line** (no hard line breaks).
+- Wrap the value in **single quotes** so `dotenv` treats it as a literal:
+  ```
+  GOOGLE_SERVICE_ACCOUNT_JSON='{"type":"service_account",...}'
+  ```
+- Do NOT use double quotes (dotenv will interpret escape sequences).
+- Do NOT use `export $(cat .env | xargs)` — it cannot handle JSON with spaces.
+- `dotenv` does **not** override existing env vars. If a stale value is already
+  set in your shell, run `unset GOOGLE_SERVICE_ACCOUNT_JSON` or open a new
+  terminal before re-running.
+
 ### Commands
-- Install: `npm ci`
+- Install: `npm install` (generates `package-lock.json` on first run;
+  subsequent installs can use `npm ci`)
 - Dev run (TypeScript directly): `npm run dev -- --invoiceId 60b`
 - Build: `npm run build`
 - Run built: `npm run generate -- --invoiceId 60b`
@@ -146,8 +162,12 @@ When modifying or adding code, follow these patterns:
 - 403/permission errors: sheet not shared with service account email, or API not
   enabled.
 - Puppeteer launch issues on CI: ensure `--no-sandbox` args are used (already
-  configured).
-
+  configured).- `SyntaxError: Unexpected end of JSON input` at `sheets.ts JSON.parse`: the
+  `GOOGLE_SERVICE_ACCOUNT_JSON` env var is truncated. See `.env` formatting
+  notes above. If running locally, check for a stale value in the shell
+  (`echo $GOOGLE_SERVICE_ACCOUNT_JSON`) and `unset` it.
+- `npm ci` fails with "no package-lock.json": run `npm install` first to
+  generate the lockfile, then commit it.
 ## What Copilot should do in this repo
 - Generate new features as small modules wired through `src/index.ts`.
 - Update `templates/invoice.hbs` + `invoice.css` for layout changes.
