@@ -4,15 +4,21 @@ import type { InvoiceRow, LineItem } from "./types.js";
 
 const invoiceSchema = z.object({
   invoice_id: z.string().min(1),
+  invoice_number: z.string().min(1),
+  invoice_date: z.string().min(10),
+
   client_name: z.string().min(1),
   client_address: z.string().min(1),
+
   your_name: z.string().min(1),
   your_address: z.string().min(1),
+
   hourly_rate_nzd: z.coerce.number(),
   leave_days: z.coerce.number(),
+
   period_start: z.string().min(10),
   period_end: z.string().min(10),
-  invoice_number: z.string().min(1),
+
   notes: z.string().optional()
 });
 
@@ -50,15 +56,21 @@ export async function loadFromSheets(params: {
 
   const invoice: InvoiceRow = {
     invoiceId: invParsed.invoice_id,
+    invoiceNumber: invParsed.invoice_number,
+    invoiceDate: invParsed.invoice_date,
+
     clientName: invParsed.client_name,
     clientAddress: invParsed.client_address,
+
     yourName: invParsed.your_name,
     yourAddress: invParsed.your_address,
+
     hourlyRateNzd: invParsed.hourly_rate_nzd,
     leaveDays: invParsed.leave_days,
+
     periodStart: invParsed.period_start,
     periodEnd: invParsed.period_end,
-    invoiceNumber: invParsed.invoice_number,
+
     notes: invParsed.notes
   };
 

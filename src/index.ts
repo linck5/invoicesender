@@ -1,8 +1,7 @@
 import path from "node:path";
-import { DateTime } from "luxon";
 import { loadConfig } from "./config.js";
 import { loadFromSheets } from "./sheets.js";
-import { buildBaseServiceLine, lastDayOfMonthIso, sumTotal } from "./calc.js";
+import { buildBaseServiceLine, sumTotal } from "./calc.js";
 import { renderInvoiceHtml } from "./renderHtml.js";
 import { htmlToPdf } from "./renderPdf.js";
 
@@ -12,16 +11,16 @@ function getArg(name: string): string | undefined {
   return process.argv[idx + 1];
 }
 
-function defaultInvoiceId(tz: string): string {
-  const now = DateTime.now().setZone(tz);
-  const prevMonth = now.minus({ months: 1 });
-  return prevMonth.toFormat("yyyy-MM");
-}
-
 async function main(): Promise<void> {
   const cfg = loadConfig();
 
-  const invoiceId = getArg("invoiceId") ?? defaultInvoiceId(cfg.INVOICE_TIMEZONE);
+  const invoiceId = getArg("invoiceId");
+  if (!invoiceId) {
+    throw new Error(
+      "Missing required arg: --invoiceId\n" +
+        'Example: npm run generate -- --invoiceId "60b"'
+    );
+  }
 
   const { invoice, extras } = await loadFromSheets({
     serviceAccountJson: cfg.GOOGLE_SERVICE_ACCOUNT_JSON,
@@ -37,8 +36,6 @@ async function main(): Promise<void> {
     tz: cfg.INVOICE_TIMEZONE
   });
 
-  const invoiceDate = lastDayOfMonthIso(invoice.periodEnd, cfg.INVOICE_TIMEZONE);
-
   const items = [baseLine, ...extras].map((li) => {
     const amount = li.quantity * li.unitPriceNzd;
     return { ...li, amountNzd: amount };
@@ -49,11 +46,14 @@ async function main(): Promise<void> {
   const html = await renderInvoiceHtml({
     invoiceId: invoice.invoiceId,
     invoiceNumber: invoice.invoiceNumber,
-    invoiceDate,
+    invoiceDate: invoice.invoiceDate,
+
     yourName: invoice.yourName,
     yourAddress: invoice.yourAddress,
+
     clientName: invoice.clientName,
     clientAddress: invoice.clientAddress,
+
     currency: "NZD",
     items,
     totalNzd,

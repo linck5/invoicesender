@@ -19,11 +19,6 @@ export function countBusinessDaysInclusive(
   return count;
 }
 
-export function lastDayOfMonthIso(anyIsoInMonth: string, tz: string): string {
-  const d = DateTime.fromISO(anyIsoInMonth, { zone: tz });
-  return d.endOf("month").toISODate();
-}
-
 export function buildBaseServiceLine(params: {
   periodStart: string;
   periodEnd: string;

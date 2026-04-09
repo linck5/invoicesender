@@ -4,13 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       invoiceId:
-        description: "Invoice id like 2026-03"
-        required: false
+        description: "Invoice id like 58, 60b, 61alt"
+        required: true
         type: string
-  schedule:
-    - cron: "0 10 1 * *"
-    # Runs 10:00 UTC on the 1st day of each month.
-    # Your script defaults to previous month in Pacific/Auckland.
 
 jobs:
   build-invoice:
@@ -36,13 +32,7 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
           INVOICE_TIMEZONE: Pacific/Auckland
-        run: |
-          INVOICE_ID="${{ inputs.invoiceId }}"
-          if [ -n "$INVOICE_ID" ]; then
-            npm run generate -- --invoiceId "$INVOICE_ID"
-          else
-            npm run generate
-          fi
+        run: npm run generate -- --invoiceId "${{ inputs.invoiceId }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
