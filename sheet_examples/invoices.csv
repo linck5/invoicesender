@@ -1,0 +1,3 @@
+invoice_id,invoice_number,invoice_date,client_name,client_address,your_name,your_address,hourly_rate_nzd,leave_days,period_start,period_end,notes
+60b,INV-060B,2026-03-31,Acme Corp,"123 Queen Street, Auckland 1010, New Zealand",Phil Thomas,"45 Cuba Street, Wellington 6011, New Zealand",150,2,2026-03-01,2026-03-31,March 2026 services
+61,INV-0061,2026-04-30,Acme Corp,"123 Queen Street, Auckland 1010, New Zealand",Phil Thomas,"45 Cuba Street, Wellington 6011, New Zealand",150,0,2026-04-01,2026-04-30,
