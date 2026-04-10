@@ -5,6 +5,7 @@ import { loadFromSheets } from "./sheets.js";
 import { buildBaseServiceLine, sumTotal } from "./calc.js";
 import { renderInvoiceHtml } from "./renderHtml.js";
 import { htmlToPdf } from "./renderPdf.js";
+import { writeActionsOutputs } from "./ci.js";
 
 function getArg(name: string): string | undefined {
   const idx = process.argv.indexOf(`--${name}`);
@@ -91,6 +92,8 @@ async function main(): Promise<void> {
       2
     )
   );
+
+  writeActionsOutputs(invoice.invoiceNumber, invoice.emailName, invoice.periodStart);
 }
 
 main().catch((err) => {
