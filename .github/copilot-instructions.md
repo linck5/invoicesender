@@ -162,13 +162,6 @@ When modifying or adding code, follow these patterns:
   changes and commit/push manually.
 - Do not stage files, create commits, or run `git push`.
 
-## Extensibility roadmap (common future tasks)
-- Write back status fields to the `Invoices` sheet (requires edit scope and
-  editor access).
-- Add optional fields like PO number, due date, payment instructions, bank
-  details, GST/tax handling (keep template + calculation logic separate).
-- Add tests for `calc.ts` (business day counts).
-
 ## Troubleshooting notes
 - “Invoice not found”: `invoice_id` mismatch between sheet and CLI input.
 - 403/permission errors: sheet not shared with service account email, or API not
