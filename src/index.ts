@@ -80,7 +80,13 @@ async function main(): Promise<void> {
 
   console.log(
     JSON.stringify(
-      { invoiceId, invoiceNumber: invoice.invoiceNumber, outPath },
+      {
+        invoiceId,
+        invoiceNumber: invoice.invoiceNumber,
+        emailName: invoice.emailName,
+        periodStart: invoice.periodStart,
+        outPath
+      },
       null,
       2
     )

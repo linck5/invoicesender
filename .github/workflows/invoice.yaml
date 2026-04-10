@@ -42,9 +42,27 @@ jobs:
           echo "$OUTPUT"
           INVOICE_NUMBER=$(echo "$OUTPUT" | grep -o '"invoiceNumber": "[^"]*"' | cut -d'"' -f4)
           echo "invoice_number=$INVOICE_NUMBER" >> "$GITHUB_OUTPUT"
+          EMAIL_NAME=$(echo "$OUTPUT" | grep -o '"emailName": "[^"]*"' | cut -d'"' -f4)
+          echo "email_name=$EMAIL_NAME" >> "$GITHUB_OUTPUT"
+          PERIOD_START=$(echo "$OUTPUT" | grep -o '"periodStart": "[^"]*"' | cut -d'"' -f4)
+          echo "period_start=$PERIOD_START" >> "$GITHUB_OUTPUT"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.generate.outputs.invoice_number }}
           path: out/*.pdf
+
+      - name: Job summary
+        run: |
+          PERIOD_START="${{ steps.generate.outputs.period_start }}"
+          MONTH_YEAR=$(date -d "$PERIOD_START" +"%Y %B" 2>/dev/null || date -j -f "%Y-%m-%d" "$PERIOD_START" +"%Y %B")
+          EMAIL_TITLE="${{ steps.generate.outputs.email_name }} - $MONTH_YEAR Invoice"
+          {
+            echo "### Email suggestion"
+            echo "$EMAIL_TITLE"
+            echo ""
+            echo "Hello,"
+            echo ""
+            echo "Here is this month's invoice"
+          } >> "$GITHUB_STEP_SUMMARY"

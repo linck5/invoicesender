@@ -61,6 +61,7 @@ Headers (exact names expected by `src/sheets.ts`):
 - `period_start` (YYYY-MM-DD)
 - `period_end` (YYYY-MM-DD)
 - `notes` (optional)
+- `email_name` (optional; used to build email subject suggestion in Job Summary)
 
 ### Tab: `LineItems`
 Headers:
@@ -162,7 +163,6 @@ When modifying or adding code, follow these patterns:
 - Do not stage files, create commits, or run `git push`.
 
 ## Extensibility roadmap (common future tasks)
-- Email PDF automatically (SMTP/Mailgun/SES/Gmail API).
 - Write back status fields to the `Invoices` sheet (requires edit scope and
   editor access).
 - Add optional fields like PO number, due date, payment instructions, bank

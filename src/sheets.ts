@@ -31,6 +31,7 @@ const invoiceSchema = z.object({
   period_start: optionalDateStr,
   period_end: optionalDateStr,
 
+  email_name: z.preprocess(emptyToUndefined, z.string().optional()),
   notes: z.string().optional()
 });
 
@@ -83,6 +84,7 @@ export async function loadFromSheets(params: {
     periodStart: invParsed.period_start,
     periodEnd: invParsed.period_end,
 
+    emailName: invParsed.email_name,
     notes: invParsed.notes
   };
 

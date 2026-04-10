@@ -15,6 +15,7 @@ export type InvoiceRow = {
   periodStart?: string; // YYYY-MM-DD
   periodEnd?: string; // YYYY-MM-DD
 
+  emailName?: string;
   notes?: string;
 };
 
