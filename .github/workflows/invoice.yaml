@@ -32,14 +32,19 @@ jobs:
         run: npm run build
 
       - name: Generate PDF
+        id: generate
         env:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           SHEET_ID: ${{ secrets.SHEET_ID }}
           INVOICE_TIMEZONE: Pacific/Auckland
-        run: npm run generate -- --invoiceId "${{ inputs.invoiceId }}"
+        run: |
+          OUTPUT=$(npm run generate -- --invoiceId "${{ inputs.invoiceId }}")
+          echo "$OUTPUT"
+          INVOICE_NUMBER=$(echo "$OUTPUT" | grep -o '"invoiceNumber": "[^"]*"' | cut -d'"' -f4)
+          echo "invoice_number=$INVOICE_NUMBER" >> "$GITHUB_OUTPUT"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: invoice-pdf
+          name: ${{ steps.generate.outputs.invoice_number }}
           path: out/*.pdf

@@ -71,10 +71,20 @@ async function main(): Promise<void> {
     notes: invoice.notes ?? ""
   });
 
-  const outPath = path.join(process.cwd(), "out", `${invoiceId}.pdf`);
+  const outPath = path.join(
+    process.cwd(),
+    "out",
+    `${invoice.invoiceNumber}.pdf`
+  );
   await htmlToPdf({ html, outPath });
 
-  console.log(JSON.stringify({ invoiceId, outPath }, null, 2));
+  console.log(
+    JSON.stringify(
+      { invoiceId, invoiceNumber: invoice.invoiceNumber, outPath },
+      null,
+      2
+    )
+  );
 }
 
 main().catch((err) => {
