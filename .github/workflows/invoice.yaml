@@ -1,10 +1,11 @@
 name: Generate invoice PDF
+run-name: "Generate invoice ${{ inputs.invoiceId }}"
 
 on:
   workflow_dispatch:
     inputs:
       invoiceId:
-        description: "Invoice id like 58, 60b, 61alt"
+        description: "Invoice id like example1, 58, 60b"
         required: true
         type: string
 
