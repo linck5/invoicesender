@@ -141,7 +141,7 @@ Google permissions:
   (Editor only if we later write back status).
 
 Artifacts:
-- The workflow uploads `out/*.pdf` as an artifact named `invoice-pdf`.
+- The workflow uploads `out/*.pdf` as an artifact named after the invoice number.
 
 ## Security rules
 - Never commit the service account JSON key.
